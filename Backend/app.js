@@ -6,7 +6,7 @@ dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-const { products } = require("./data");
+const { products} = require("./data");
 
 app.use(cors());
 app.use(express.json());
