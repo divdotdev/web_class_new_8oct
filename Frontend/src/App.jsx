@@ -10,7 +10,8 @@ function App() {
     async function getData() {
       try {
         setLoading(true);
-        const response = await fetch("http://localhost:3000/api/products");
+        const API_BASE_URL = import.meta.env.VITE_API_URL || (import.meta.env.DEV ? "http://localhost:3000" : "https://web-class-new-8oct.onrender.com");
+        const response = await fetch(`${API_BASE_URL}/api/products`);
         if (!response.ok) {
           throw new Error(`Failed to fetch products: ${response.statusText}`);
         }
@@ -46,7 +47,7 @@ function App() {
         <div style={{ padding: '40px', textAlign: 'center', color: '#e63946' }}>
           <p>Error: {error}</p>
           <p style={{ fontSize: '14px', color: '#666', marginTop: '8px' }}>
-            Ensure backend server is running on port 3000.
+            Check network connection or backend server status.
           </p>
         </div>
       )}
