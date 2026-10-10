@@ -1,0 +1,10 @@
+{
+  "name": "web-class-root",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "postinstall": "npm --prefix Backend install",
+    "build": "npm --prefix Backend install",
+    "start": "node Backend/app.js"
+  }
+}
