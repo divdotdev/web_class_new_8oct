@@ -3,28 +3,16 @@ import ProductsList from './ProductsList';
 
 function App() {
   const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
 
   useEffect(() => {
     async function getData() {
       try {
-        setLoading(true);
-        const API_BASE_URL = import.meta.env.VITE_API_URL || (import.meta.env.DEV ? "http://localhost:3000" : "https://web-class-new-8oct.onrender.com");
-        const response = await fetch(`${API_BASE_URL}/api/products`);
-        if (!response.ok) {
-          throw new Error(`Failed to fetch products: ${response.statusText}`);
-        }
-        const data = await response.json();
-        const productList = Array.isArray(data)
-          ? (data[0]?.products || data)
-          : (data.products || []);
-        setProducts(Array.isArray(productList) ? productList : []);
-      } catch (err) {
-        console.error("Error fetching products:", err);
-        setError(err.message);
-      } finally {
-        setLoading(false);
+        let response = await fetch("https://web-class-new-8oct.onrender.com/api/products");
+        let data = await response.json();
+        console.log(data);
+        setProducts(data[0]?.products || data.products || data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
       }
     }
 
@@ -32,27 +20,8 @@ function App() {
   }, []);
 
   return (
-    <div style={{ width: '100%' }}>
-      <header style={{ padding: '24px 0', borderBottom: '1px solid #e5e4e7' }}>
-        <h1 style={{ margin: 0, fontSize: '32px' }}>Product Store</h1>
-      </header>
-
-      {loading && (
-        <div style={{ padding: '50px', textAlign: 'center', fontSize: '18px' }}>
-          Loading products...
-        </div>
-      )}
-
-      {error && !loading && (
-        <div style={{ padding: '40px', textAlign: 'center', color: '#e63946' }}>
-          <p>Error: {error}</p>
-          <p style={{ fontSize: '14px', color: '#666', marginTop: '8px' }}>
-            Check network connection or backend server status.
-          </p>
-        </div>
-      )}
-
-      {!loading && !error && <ProductsList products={products} />}
+    <div>
+      <ProductsList products={products} />
     </div>
   );
 }
